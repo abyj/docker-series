@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: payrollapp
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
   - port: 80
   selector:

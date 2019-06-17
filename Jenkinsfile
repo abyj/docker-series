@@ -25,9 +25,9 @@ node('docker') {
          sh "docker-compose -f docker-compose.integration.yml down -v"
     stage("Push Image")
         sh "docker push my-registry:5000/accountownerapp:B${BUILD_NUMBER}"
-	stage("Deploy to k8s")
-        sh "sed -i 's/BUILD_NUMBER/B${BUILD_NUMBER}/g' mydeploy.yaml"
-		sh "kubectl apply -f mydeploy.yaml"
-		sh "kubectl apply -f myservice.yaml"
+	// stage("Deploy to k8s")
+    //     sh "sed -i 's/BUILD_NUMBER/B${BUILD_NUMBER}/g' mydeploy.yaml"
+	// 	sh "kubectl apply -f mydeploy.yaml"
+	// 	sh "kubectl apply -f myservice.yaml"
     
 }
