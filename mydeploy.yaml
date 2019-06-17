@@ -10,7 +10,7 @@ spec:
         app: payrollapp
     spec:
       containers:
-        - image: "my-registry:5000/accountownerapp:B1"
+        - image: "my-registry:5000/accountownerapp:BUILD_NUMBER"
           imagePullPolicy: Always
           name: payrollapp
           ports:
