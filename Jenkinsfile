@@ -24,7 +24,7 @@ node('docker') {
          sh "docker-compose -f docker-compose.integration.yml up --force-recreate --abort-on-container-exit"
          sh "docker-compose -f docker-compose.integration.yml down -v"
     stage("Push Image")
-        sh "docker push my-registry:5000/accountownerapp:B${BUILD_NUMBER}""
+        sh "docker push my-registry:5000/accountownerapp:B${BUILD_NUMBER}"
 	//stage("Deploy to k8s")
 	//	sh "kubectl apply -f mydeploydotlin.yaml"
 	//	sh "kubectl apply -f myservicedotlin.yaml"
