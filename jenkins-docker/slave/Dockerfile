@@ -15,6 +15,10 @@ RUN curl -L https://github.com/docker/compose/releases/download/1.21.2/docker-co
 RUN mkdir -p /home/jenkins
 RUN mkdir -p /var/lib/jenkins
 
+RUN curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+RUN chmod +x ./kubectl
+RUN mv ./kubectl /usr/local/bin
+
 ADD slave.py /var/lib/jenkins/slave.py
 
 WORKDIR /home/jenkins

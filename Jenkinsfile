@@ -4,9 +4,10 @@ node('docker') {
         checkout scm
     stage 'Build & UnitTest'
     sh "docker build -t accountownerapp:B${BUILD_NUMBER} -f Dockerfile ."
+    sh "docker build -t my-registry:5000/accountownerapp:B${BUILD_NUMBER} -f Dockerfile ."
     sh "docker build -t accountownerapp:test-B${BUILD_NUMBER} -f Dockerfile.Integration ."
     
-    stage 'Pusblish UT Reports'
+    stage 'Publish UT Reports'
         
         containerID = sh (
             script: "docker run -d accountownerapp:B${BUILD_NUMBER}", 
@@ -19,7 +20,12 @@ node('docker') {
         step([$class: 'MSTestPublisher', failOnError: false, testResultsFile: 'test_results.xml'])    
       
     stage 'Integration Test'
-        //sh 'docker-compose -f docker-compose.integration.yml up'
-        sh "docker-compose -f docker-compose.integration.yml up --force-recreate --abort-on-container-exit"
-        sh "docker-compose -f docker-compose.integration.yml down -v"
+         //sh 'docker-compose -f docker-compose.integration.yml up'
+         sh "docker-compose -f docker-compose.integration.yml up --force-recreate --abort-on-container-exit"
+         sh "docker-compose -f docker-compose.integration.yml down -v"
+    stage("Push Image")
+        sh "docker push my-registry:5000/accountownerapp:B${BUILD_NUMBER}""
+	//stage("Deploy to k8s")
+	//	sh "kubectl apply -f mydeploydotlin.yaml"
+	//	sh "kubectl apply -f myservicedotlin.yaml"
 }
